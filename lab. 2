@@ -1,0 +1,72 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main() {
+    double a = 0.0, b = 0.0, z = 0.0;
+    double x = 0.0, p = 0.0, y = 0.0, ma = 0.0;
+    int k = 0;
+    int success = 0;
+
+    while (success == 0) {
+        cout << "Enter a, b, z: ";
+        if (cin >> a >> b >> z) {
+            success = 1; 
+        }
+        else {
+            cout << "[!] ERROR: Invalid inputs! Please enter numbers only.\n" << endl;
+            cin.clear(); 
+            while (cin.get() != '\n'); 
+        }
+    }
+
+    if (z > 0.0) {
+        x = 1.0 / (z * z + 2.0 * z);
+    }
+    else {
+        x = 1.0 - (z * z * z);
+    }
+
+    success = 0;
+    while (success == 0) {
+        cout << "Select phi(x) (0 - cos, 1 - sin, 2 - tan): ";
+        if (cin >> k) {
+            if (k == 0 || k == 1 || k == 2) {
+                success = 1; 
+            }
+            else {
+                cout << "[!] ERROR: Wrong choice! Enter only 0, 1 or 2.\n" << endl;
+            }
+        }
+        else {
+            cout << "[!] ERROR: Please enter a number.\n" << endl;
+            cin.clear();
+            while (cin.get() != '\n');
+        }
+    }
+
+    if (k == 0) p = cos(x);
+    else if (k == 1) p = sin(x);
+    else p = tan(x);
+
+    double numerator = 2.5 * a * exp(-3.0 * x) - 4.0 * b * x * x;
+    double denominator = log(fabs(x)) + p;
+    y = numerator / denominator;
+
+    cout << "Calculated x = " << x << endl;
+    cout << "Calculated y = " << y << endl;
+
+    double abs_x = fabs(x);
+    double abs_y = fabs(y);
+    double abs_z = fabs(z);
+
+    ma = abs_x;
+    if (abs_y > ma) ma = abs_y;
+    if (abs_z > ma) ma = abs_z;
+
+    cout << "\n--- Final Result ---" << endl;
+    cout << "Max ABS (from x, y, z) = " << ma << endl;
+
+    return 0;
+}
